@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\myUsersController;
@@ -26,3 +27,6 @@ Route::post('/verify-code', [sendSmsVerification::class, 'checkVerification']);
 //test-sms
 Route::post('/dummy-send-sms', [sendSmsVerification::class, 'sendDummySms']);
 Route::post('/dummy-verify-code', [sendSmsVerification::class, 'verifyDummySms']);
+
+//Menu
+Route::get('/menu', [MenuController::class, 'getMenu']);
