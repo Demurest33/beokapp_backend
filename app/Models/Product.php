@@ -17,10 +17,22 @@ class Product extends Model
         'image_url',
         'available',
         'category_id',
+
     ];
 
-    // Opcional: establece valores predeterminados para ciertos atributos
-    protected $attributes = [
+
+
+    public function options()
+    {
+        return $this->hasMany(Option::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    protected $attributes = [ //valores predeterminaods para ciertos atributos
         'available' => true,
     ];
 
@@ -33,11 +45,5 @@ class Product extends Model
         'price' => 'decimal:2',
         'available' => 'boolean',
     ];
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
 
 }

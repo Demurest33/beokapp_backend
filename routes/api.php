@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\myUsersController;
@@ -30,3 +31,6 @@ Route::post('/dummy-verify-code', [sendSmsVerification::class, 'verifyDummySms']
 
 //Menu
 Route::get('/menu', [MenuController::class, 'getMenu']);
+
+//Products
+Route::get('product/{id}/options', [ProductController::class, 'getOptions']);

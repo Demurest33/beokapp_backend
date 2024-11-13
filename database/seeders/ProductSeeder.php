@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Option;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,10 +13,12 @@ class ProductSeeder extends Seeder
     public function run()
     {
 
-        $desayunos = Category::where('name', 'Desayunos')->first();
         $bebidasSnacks = Category::where('name', 'Bebidas y Snacks')->first();
         $comidaCorrida = Category::where('name', 'Comida Corrida')->first();
         $comidaTodoDia = Category::where('name', 'Comida de Todo el Día')->first();
+
+        $desayunos = Category::where('name', 'Desayunos')->first();
+
 
         Product::create([
             'name' => 'Huevos Rancheros',
@@ -24,7 +27,28 @@ class ProductSeeder extends Seeder
             'category_id' => $desayunos->id,
             'image_url' => 'https://newmansown.com/wp-content/uploads/2024/07/huevos-rancheros.jpg'
         ]);
-        // Obtener IDs de las categorías para asignarlos a los productos
+
+        //hot cakes
+        $hotCakes = Product::create([
+            'name' => 'Hot Cakes',
+            'description' => 'Hot cakes con miel o mantequilla y tamaño chico o grande.',
+            'price' => 60.00,
+            'category_id' => $desayunos->id,
+            'image_url' => 'https://example.com/hotcakes.jpg',
+        ]);
+
+        // Crear las opciones para el producto
+        Option::create([
+            'name' => 'Tamaño',  // Nombre de la opción
+            'values' => ['Chico', 'Grande'],  // Los valores posibles para esta opción
+            'product_id' => $hotCakes->id,  // Relacionamos con el producto creado
+        ]);
+
+        Option::create([
+            'name' => 'Acompañante',  // Nombre de la opción
+            'values' => ['Miel', 'Mantequilla'],  // Los valores posibles para esta opción
+            'product_id' => $hotCakes->id,  // Relacionamos con el producto creado
+        ]);
 
 //
 //        $products = [
