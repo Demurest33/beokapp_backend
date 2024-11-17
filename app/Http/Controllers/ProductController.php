@@ -18,6 +18,8 @@ class ProductController extends Controller
         }
 
         // Devolver las opciones del producto
-        return response()->json($product->options);
+        return response()->json([
+            "options" => $product->options
+        ]);
     }
 }

@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    public function getMenu(): \Illuminate\Http\JsonResponse
+    public function getMenu()
     {
-        $menu = Category::with('products')->get();
+        $categories = Category::with('products')->get();
 
-        return response()->json($menu);
+        return response()->json([
+            'categories' => $categories
+        ]);
     }
+
 }
