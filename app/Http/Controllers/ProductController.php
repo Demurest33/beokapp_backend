@@ -22,4 +22,16 @@ class ProductController extends Controller
             "options" => $product->options
         ]);
     }
+
+    public function getProductById($id)
+    {
+        // Buscar el producto junto con sus opciones
+        $product = Product::with('options')->find($id);
+
+        if (!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        return response()->json($product);
+    }
 }

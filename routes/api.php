@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,3 +35,8 @@ Route::get('/menu', [MenuController::class, 'getMenu']);
 
 //Products
 Route::get('product/{id}/options', [ProductController::class, 'getOptions']);
+Route::get('/product/{id}', [ProductController::class, 'getProductById']);
+
+//Pedidos
+Route::post('/orders', [OrderController::class, 'store']);
+Route::post('/get-orders', [OrderController::class, 'index']);
