@@ -12,7 +12,7 @@ class OrderProduct extends Model
     protected $table = 'order_product';  // Define el nombre de la tabla intermedia
 
     protected $fillable = [
-        'order_id', 'product_id', 'quantity', 'price', 'selected_options', 'image_url'
+        'order_id', 'product_id', 'quantity', 'price', 'selected_options', 'image_url', 'product_name'
     ];
 
     protected $casts = [

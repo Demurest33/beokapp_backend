@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,3 +41,4 @@ Route::get('/product/{id}', [ProductController::class, 'getProductById']);
 //Pedidos
 Route::post('/orders', [OrderController::class, 'store']);
 Route::post('/get-orders', [OrderController::class, 'index']);
+Route::get('/orders/{order}/order-products', [OrderProductController::class, 'getOrderProductDetails']);

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('price', 8, 2); // Columna de precio
-            $table->json('selected_options')->nullable(); // Opciones seleccionadas (solo una columna de opciones)
+            $table->json('selected_options')->nullable();
             $table->string('image_url')->nullable(); // URL de la imagen
+            $table->string('product_name');
             $table->timestamps();
         });
     }

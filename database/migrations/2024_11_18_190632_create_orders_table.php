@@ -11,12 +11,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('my_users')->onDelete('cascade');
-            $table->integer('total');
-            $table->enum('status', ['preparing', 'ready', 'delivered', 'cancelled']);
+            $table->decimal('total', 8, 2);
+            $table->enum('status', ['preparando', 'listo', 'entregado', 'cancelado']);
             $table->text('message')->nullable();
             $table->string('pick_up_date');
             $table->enum('payment_type', ['efectivo', 'transferencia']);
-
+            $table->boolean('is_fav')->default(false);
             $table->timestamps();
         });
     }

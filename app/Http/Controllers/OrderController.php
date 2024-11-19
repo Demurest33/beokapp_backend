@@ -22,6 +22,8 @@ class OrderController extends Controller
             'additionalInstructions' => 'nullable|string',
         ]);
 
+        dd(json_encode($request->products[0]['selectedOptions']));
+
         // Iniciar una transacción para asegurar que los datos sean consistentes
         DB::beginTransaction();
 
@@ -32,7 +34,7 @@ class OrderController extends Controller
                 'pick_up_date' => $request->pick_up_date,
                 'payment_type' => $request->payment_type,
                 'total' => $request->total,
-                'additional_instructions' => $request->additionalInstructions,
+                'message' => $request->additionalInstructions
             ]);
 
             // Guardar los productos del pedido
@@ -46,8 +48,10 @@ class OrderController extends Controller
                     'product_id' => $product->id,
                     'quantity' => $productData['quantity'],
                     'price' => $productData['price'],
-                    'selected_options' => json_encode($productData['selectedOptions']), // Guardamos las opciones seleccionadas como JSON
+                    'selected_options' => json_encode($productData['selectedOptions']),
                     'image_url' => $productData['image_url'],
+                    'product_name' => $productData['name']
+
                 ]);
             }
 

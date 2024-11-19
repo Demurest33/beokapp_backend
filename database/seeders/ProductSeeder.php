@@ -34,7 +34,7 @@ class ProductSeeder extends Seeder
             'description' => 'Hot cakes con miel o mantequilla y tamaño chico o grande.',
             'price' => 60.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://example.com/hotcakes.jpg',
+            'image_url' => 'https://karo.com.mx/wp-content/uploads/2023/09/Hotcakes-de-trigo-y-frutos-rojos.jpg',
         ]);
 
         // Crear las opciones para el producto
