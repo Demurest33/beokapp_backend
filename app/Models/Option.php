@@ -14,11 +14,13 @@ class Option extends Model
         'name',
         'values', // Asegúrate de permitir los valores
         'product_id', // Relaciona con el producto
+        'prices'
     ];
 
     // Convierte el campo 'values' a un array cuando se obtenga
     protected $casts = [
         'values' => 'array',
+        'prices' => 'array',
     ];
 
     // Relación con el modelo Product

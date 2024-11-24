@@ -41,6 +41,7 @@ class ProductSeeder extends Seeder
         Option::create([
             'name' => 'Tamaño',  // Nombre de la opción
             'values' => ['Chico', 'Grande'],  // Los valores posibles para esta opción
+            'prices' => [30.00, 45.00],
             'product_id' => $hotCakes->id,  // Relacionamos con el producto creado
         ]);
 

@@ -18,4 +18,5 @@ class OrderProduct extends Model
     protected $casts = [
         'selected_options' => 'array',  // Convertir las opciones seleccionadas a un array
     ];
+
 }

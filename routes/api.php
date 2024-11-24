@@ -42,3 +42,5 @@ Route::get('/product/{id}', [ProductController::class, 'getProductById']);
 Route::post('/orders', [OrderController::class, 'store']);
 Route::post('/get-orders', [OrderController::class, 'index']);
 Route::get('/orders/{order}/order-products', [OrderProductController::class, 'getOrderProductDetails']);
+Route::patch('/orders/{id}/favorite', [OrderController::class, 'toggleFavorite']);
+Route::post('/orders/reorder', [OrderController::class, 'reorder']);

@@ -22,8 +22,6 @@ class OrderController extends Controller
             'additionalInstructions' => 'nullable|string',
         ]);
 
-        dd(json_encode($request->products[0]['selectedOptions']));
-
         // Iniciar una transacción para asegurar que los datos sean consistentes
         DB::beginTransaction();
 
@@ -47,7 +45,7 @@ class OrderController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $product->id,
                     'quantity' => $productData['quantity'],
-                    'price' => $productData['price'],
+                    'price' => $productData['totalPrice'],
                     'selected_options' => json_encode($productData['selectedOptions']),
                     'image_url' => $productData['image_url'],
                     'product_name' => $productData['name']
@@ -88,4 +86,66 @@ class OrderController extends Controller
 
         return response()->json($orders);
     }
+
+    public function toggleFavorite($id)
+    {
+        try {
+            // Buscar la orden por su ID
+            $order = Order::findOrFail($id);
+
+            // Cambiar el estado de "is_fav" (true a false o viceversa)
+            $order->is_fav = !$order->is_fav;
+            $order->save();
+
+            return response()->json([
+                'message' => 'Order favorite status updated successfully.',
+                'order' => $order
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to update favorite status.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'pick_up_date' => 'required|string',
+        ]);
+
+        $originalOrder = Order::with('products')->find($request->order_id);
+
+
+        // Crear el nuevo pedido
+        $newOrder = Order::create([
+            'user_id' => $originalOrder->user_id,
+            'total' => $originalOrder->total,
+            'status' => 'Preparando', // Estado inicial del pedido
+            'pick_up_date' => $request->pick_up_date,
+            'message' => $originalOrder->message,
+        ]);
+
+        // Copiar los productos del pedido original al nuevo pedido
+        foreach ($originalOrder->products as $product) {
+            OrderProduct::create([
+                'order_id' => $newOrder->id,
+                'product_id' => $product->id,
+                'quantity' => $product->pivot->quantity,
+                'price' => $product->pivot->price,
+                'selected_options' => json_decode($product->pivot->selected_options, true),
+                'image_url' => $product->pivot->image_url,
+                'product_name' => $product->name,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pedido creado exitosamente.',
+            'new_order_id' => $newOrder->id,
+        ]);
+    }
+
 }

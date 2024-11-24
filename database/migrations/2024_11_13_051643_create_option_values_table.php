@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_option_id')->constrained(); // Relación con product_options
             $table->string('value');  // Valor de la opción, como "Chico", "Grande"
+            $table->decimal('price_modifier', 8, 2); // Modificador de precio
             $table->timestamps();
         });
     }
