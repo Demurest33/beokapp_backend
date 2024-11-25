@@ -15,30 +15,31 @@ class CategorySeeder extends Seeder
     {
         Category::create([
             'name' => 'Desayunos',
-            'availability_start' => '07:00:00',
-            'availability_end' => '11:00:00',
-            'available_days' => ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'],
-        ]);
-
-        Category::create([
-            'name' => 'Bebidas y Snacks',
-            'availability_start' => '09:00:00',
-            'availability_end' => '18:00:00',
+            'availability_start' => '8:00 AM',
+            'availability_end' => '1:00 PM',
             'available_days' => ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'],
         ]);
 
         Category::create([
             'name' => 'Comida Corrida',
-            'availability_start' => '12:00:00',
-            'availability_end' => '15:00:00',
+            'availability_start' => '1:00 PM',
+            'availability_end' => '5:30 PM',
             'available_days' => ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'],
         ]);
 
         Category::create([
-            'name' => 'Comida Todo el Día',
-            'availability_start' => '07:00:00',
-            'availability_end' => '20:00:00',
+            'name' => 'Todo el day',
+            'availability_start' => '8:00 AM',
+            'availability_end' => '5:30 PM',
             'available_days' => ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+        ]);
+
+        Category::create([
+            'name' => 'Menus',
+        ]);
+
+        Category::create([
+            'name' => 'Combos',
         ]);
     }
 }

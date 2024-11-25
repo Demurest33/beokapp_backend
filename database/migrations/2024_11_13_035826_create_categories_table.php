@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->time('availability_start')->nullable(); // Hora de inicio
-            $table->time('availability_end')->nullable();   // Hora de fin
+            $table->string('availability_start')->nullable(); // Hora de inicio
+            $table->string('availability_end')->nullable();   // Hora de fin
             $table->json('available_days')->nullable();     // Días disponibles (guardados en formato JSON)
             $table->timestamps();
         });
