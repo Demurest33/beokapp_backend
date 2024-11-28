@@ -32,8 +32,13 @@ class OrderController extends Controller
                 'pick_up_date' => $request->pick_up_date,
                 'payment_type' => $request->payment_type,
                 'total' => $request->total,
-                'message' => $request->additionalInstructions
+                'message' => $request->additionalInstructions,
+                'hash' => 'temp'
             ]);
+
+            // Generar el hash basado en el ID del pedido y actualizarlo
+            $order->hash = hash('sha256', $order->id);
+            $order->save();
 
             // Guardar los productos del pedido
             foreach ($request->products as $productData) {

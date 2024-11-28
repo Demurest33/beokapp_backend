@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\myUsersController;
 use App\Http\Controllers\sendSmsVerification;
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\DB;
 
 //Test
 Route::get('/', function () {
@@ -44,3 +45,33 @@ Route::post('/get-orders', [OrderController::class, 'index']);
 Route::get('/orders/{order}/order-products', [OrderProductController::class, 'getOrderProductDetails']);
 Route::patch('/orders/{id}/favorite', [OrderController::class, 'toggleFavorite']);
 Route::post('/orders/reorder', [OrderController::class, 'reorder']);
+
+//QR
+use App\Models\Order;
+use App\Models\OrderProduct;
+
+Route::post('/decode-qr', function (Request $request) {
+    $hash = $request->input('hash');
+    $pedido = Order::where('hash', $hash)->first();
+
+    if ($pedido) {
+        // Obtener todos los productos de la orden utilizando el modelo OrderProduct
+        $orderProducts = OrderProduct::where('order_id', $pedido->id)
+            ->get()
+            ->map(function ($orderProduct) {
+                // Decodificar las opciones seleccionadas desde JSON a un array
+                $orderProduct->selected_options = json_decode($orderProduct->selected_options, true);
+                return $orderProduct;
+            });
+
+        // Devolver los datos
+        return response()->json([
+            'order' => $pedido,
+            'order_products' => $orderProducts,
+        ]);
+    }
+
+    return response()->json(['error' => 'Pedido no encontrado'], 404);
+});
+
+

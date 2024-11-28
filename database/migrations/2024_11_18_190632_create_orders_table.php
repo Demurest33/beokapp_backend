@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('pick_up_date');
             $table->enum('payment_type', ['efectivo', 'transferencia']);
             $table->boolean('is_fav')->default(false);
+            $table->string('hash')->unique();
             $table->timestamps();
         });
     }
