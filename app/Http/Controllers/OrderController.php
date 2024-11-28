@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\myUser;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderProduct;
@@ -80,8 +81,14 @@ class OrderController extends Controller
     {
         $userId = $request->input('user_id'); // Obtener el ID del usuario del request
 
-        // Verificamos si el usuario es admin o cliente
-        if ($request->input('role') === 'ADMIN') {
+        // Buscar el rol del usuario desde la base de datos
+        $user = myUser::find($userId);
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        if ($user->role === 'ADMIN' || $user->role === 'AUXILIAR') {
             // Si el usuario es admin, devuelve todas las órdenes
             $orders = Order::all();
         } else {
@@ -91,6 +98,7 @@ class OrderController extends Controller
 
         return response()->json($orders);
     }
+
 
     public function toggleFavorite($id)
     {
