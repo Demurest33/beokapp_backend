@@ -11,6 +11,8 @@ use App\Http\Controllers\myUsersController;
 use App\Http\Controllers\sendSmsVerification;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\DB;
+use App\Models\Order;
+use App\Models\OrderProduct;
 
 //Test
 Route::get('/', function () {
@@ -23,10 +25,11 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 //Users
 Route::get('/users', [myUsersController::class, 'index']);
-
+Route::put('/users/{id}/role', [myUsersController::class, 'updateRole']);
 
 //Sms
 Route::post('/send-sms', [sendSmsVerification::class, 'sendsms']);
+Route::post('/send-whatsApp', [sendSmsVerification::class, 'sendWhatsApp']);
 Route::post('/verify-code', [sendSmsVerification::class, 'checkVerification']);
 //test-sms
 Route::post('/dummy-send-sms', [sendSmsVerification::class, 'sendDummySms']);
@@ -45,11 +48,9 @@ Route::post('/get-orders', [OrderController::class, 'index']);
 Route::get('/orders/{order}/order-products', [OrderProductController::class, 'getOrderProductDetails']);
 Route::patch('/orders/{id}/favorite', [OrderController::class, 'toggleFavorite']);
 Route::post('/orders/reorder', [OrderController::class, 'reorder']);
+Route::patch('/orders/{id}/status', [OrderController::class, 'updateStatus']);
 
 //QR
-use App\Models\Order;
-use App\Models\OrderProduct;
-
 Route::post('/decode-qr', function (Request $request) {
     $hash = $request->input('hash');
     $pedido = Order::where('hash', $hash)->first();

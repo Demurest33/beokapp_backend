@@ -33,7 +33,7 @@ class myUser extends Model
     // Si los roles van a ser almacenados como texto en la base de datos, puedes agregar una constante
     const ROLE_CLIENTE = 'CLIENTE';
     const ROLE_ADMIN = 'ADMIN';
-    const ROLE_AXULIAR = 'AXULIAR';
+    const ROLE_AXULIAR = 'AUXILIAR';
 
     // Método para obtener los roles
     public function getRoleAttribute($value)

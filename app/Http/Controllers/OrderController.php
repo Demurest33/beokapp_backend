@@ -89,17 +89,17 @@ class OrderController extends Controller
         }
 
         if ($user->role === 'ADMIN' || $user->role === 'AUXILIAR') {
-            // Si el usuario es admin, devuelve todas las órdenes
-            $orders = Order::all();
+            // Si el usuario es admin o auxiliar, incluye información del usuario relacionado con el pedido
+            $orders = Order::with('user:id,name,lastname,phone')->get();
         } else {
             // Si el usuario es cliente, solo devuelve sus propias órdenes
-            $orders = Order::where('user_id', $userId)->get();
+            $orders = Order::with('user:id,name,lastname,phone')
+                ->where('user_id', $userId)
+                ->get();
         }
 
         return response()->json($orders);
     }
-
-
     public function toggleFavorite($id)
     {
         try {
@@ -121,7 +121,6 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
     public function reorder(Request $request)
     {
         $request->validate([
@@ -161,4 +160,34 @@ class OrderController extends Controller
         ]);
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        // Validar el estado recibido
+        $validated = $request->validate([
+            'status' => 'required|string|in:preparando,listo,entregado,cancelado',
+            'message' => 'nullable|string|max:255',
+        ]);
+
+        // Buscar el pedido
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json(['message' => 'Pedido no encontrado'], 404);
+        }
+
+        // Actualizar el estado
+        $order->status = $validated['status'];
+
+        // Si el estado es "Cancelado", guardar el mensaje opcional
+        if ($validated['status'] === 'cancelado') {
+            $order->message = $validated['message'] ?? null;
+        }
+
+        $order->save();
+
+        return response()->json([
+            'message' => 'Estado del pedido actualizado correctamente',
+            'order' => $order
+        ]);
+    }
 }

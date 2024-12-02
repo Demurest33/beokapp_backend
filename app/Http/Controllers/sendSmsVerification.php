@@ -21,12 +21,41 @@ class sendSmsVerification extends Controller
         $verification = $twilio->verify->v2
             ->services($verifyServiceSid)
             ->verifications
-            ->create($senderNumber, "sms");
+            ->create($request->phone, "sms" );
 
         return response()->json([
             'message' => 'Código de verificación enviado al número ' . $request->phone,
         ]);
     }
+
+    public function sendWhatsApp(Request $request) {
+        $sid = env('TWILIO_SID');
+        $token = env('TWILIO_TOKEN');
+        $senderNumber = env('TWILIO_WHATSAPP_PHONE');
+
+        $twilio = new Client($sid, $token);
+
+        try {
+            // Envía un mensaje de WhatsApp
+            $message = $twilio->messages->create(
+                "whatsapp:" . $request->phone, // Número destino con prefijo "whatsapp:"
+                [
+                    "from" => "whatsapp:" . $senderNumber,
+                    "body" => "Hola, este es un mensaje de prueba desde tu aplicación usando Twilio."
+                ]
+            );
+
+            return response()->json([
+                'message' => 'Mensaje de WhatsApp enviado al número ' . $request->phone,
+                'sid' => $message->sid
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'No se pudo enviar el mensaje de WhatsApp. ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     public function checkVerification(Request $request)
     {
@@ -48,7 +77,7 @@ class sendSmsVerification extends Controller
             ->services($verifyServiceSid)
             ->verificationChecks
             ->create([
-                'to' => $myPhoneNumber,
+                'to' => $recieverNumber,
                 'code' => $request->code
             ]);
 

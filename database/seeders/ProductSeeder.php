@@ -426,7 +426,7 @@ class ProductSeeder extends Seeder
             'image_url' => 'https://i.imgur.com/ZLPgMZ6.png'
         ]);
         Option::create([
-            'name' => 'Preparación',
+            'name' => 'Pechuga',
             'values' => ['Empanizada', 'Asada'],
             'prices' => [0, 0],
             'product_id' => $menu2->id,
@@ -440,7 +440,7 @@ class ProductSeeder extends Seeder
             'image_url' => 'https://i.imgur.com/gaWvPFm.png'
         ]);
         Option::create([
-            'name' => 'Preparación',
+            'name' => 'Bistec',
             'values' => ['A la mexicana', 'Empanizado', 'Asado'],
             'prices' => [0, 0, 0],
             'product_id' => $menu3->id,
@@ -509,12 +509,19 @@ class ProductSeeder extends Seeder
             'image_url' => 'https://i.imgur.com/mWBfgqn.png'
         ]);
 
-        Product::create([
+        $combo6 = Product::create([
             'name' => 'Combo 6',
             'description' => 'Cuernito Jamón o Salchicha + Agua del día',
             'price' => 42.00,
             'category_id' => $combos->id,
             'image_url' => 'https://i.imgur.com/9gRiRP4.png'
+        ]);
+
+        Option::create([
+            'name' => 'Cuernito',
+            'values' => ['Jamón', 'Salchicha'],
+            'prices' => [0, 0,],
+            'product_id' => $combo6->id,
         ]);
 
         $combo7 = Product::create([
