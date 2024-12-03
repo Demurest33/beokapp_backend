@@ -135,10 +135,15 @@ class OrderController extends Controller
         $newOrder = Order::create([
             'user_id' => $originalOrder->user_id,
             'total' => $originalOrder->total,
-            'status' => 'Preparando', // Estado inicial del pedido
+            'status' => 'preparando', // Estado inicial del pedido
             'pick_up_date' => $request->pick_up_date,
             'message' => $originalOrder->message,
+            'hash' => 'temp'
         ]);
+
+        // Generar el hash basado en el ID del pedido y actualizarlo
+        $newOrder->hash = hash('sha256', $newOrder->id);
+        $newOrder->save();
 
         // Copiar los productos del pedido original al nuevo pedido
         foreach ($originalOrder->products as $product) {
