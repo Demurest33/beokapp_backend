@@ -24,7 +24,7 @@ class ProductSeeder extends Seeder
             'description' => 'Frutas: Melón, Plátano, Manzana, Papaya. Con Yogurt y Granola',
             'price' => 38.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://peopleenespanol.com/thmb/nKNCbtZACj0CWsvOSBEdfu4LDHM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/coctel-de-frutas-facil-2000-7dd72cf51d2d4c9d8e876b85255111e6.jpg'
+            'image_url' => 'https://i.imgur.com/1wNm9N2.png'
         ]);
 
         Option::create([
@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
             'description' => 'Deliciosos hot cakes, con un adereso',
             'price' => 14.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://karo.com.mx/wp-content/uploads/2023/09/Hotcakes-de-trigo-y-frutos-rojos.jpg',
+            'image_url' => 'https://i.imgur.com/7nN4Bzg.png',
         ]);
         Option::create([
             'name' => 'Cantidad de piezas',
@@ -58,7 +58,7 @@ class ProductSeeder extends Seeder
             'description' => 'Deliciosos huevos al gusto: A la mexicana, con jamón, salchicha o champiñón',
             'price' => 38.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://d2j6dbq0eux0bg.cloudfront.net/images/50348138/2234774859.jpg',
+            'image_url' => 'https://i.imgur.com/yFYk4VU.png',
         ]);
         Option::create([
             'name' => 'Preparación',
@@ -71,7 +71,7 @@ class ProductSeeder extends Seeder
             'description' => 'Picadas sencillas (salsa y queso)',
             'price' => 13.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://i.blogs.es/ff849b/picadas-veracruzanas/1366_2000.jpg',
+            'image_url' => 'https://i.imgur.com/xZePKOt.png',
         ]);
         Option::create([
             'name' => 'Cantidad de Piezas',
@@ -91,7 +91,7 @@ class ProductSeeder extends Seeder
             'description' => 'Picadas preparadas con un topping a elección.',
             'price' => 35.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://tb-static.uber.com/prod/image-proc/processed_images/38cdd7fe692007f523a5ebdcc5c0aa7d/fb86662148be855d931b37d6c1e5fcbe.jpeg',
+            'image_url' => 'https://i.imgur.com/ztSXyFq.png',
         ]);
         Option::create([
             'name' => 'Cantidad de Piezas',
@@ -208,7 +208,7 @@ class ProductSeeder extends Seeder
 
         $Tostadas = Product::create([
             'name' => 'Tostadas',
-            'description' => 'Entomatadas con crema y queso',
+            'description' => 'Tostadas con crema y queso',
             'price' => 60.00,
             'category_id' => $desayunos->id,
             'image_url' => 'https://guerrerotortillas.com/wp-content/uploads/2021/04/beef-tostadas.jpg',
@@ -482,7 +482,7 @@ class ProductSeeder extends Seeder
             'description' => '3 Tacos + Agua del día',
             'price' => 55.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/WgGtPAy.png'
+            'image_url' => 'https://i.imgur.com/eWVKnB1.png'
         ]);
 
 
@@ -491,7 +491,7 @@ class ProductSeeder extends Seeder
             'description' => '3 Picadas + Agua del día',
             'price' => 50.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/lxgmR13.png'
+            'image_url' => 'https://i.imgur.com/aJwlvmL.png'
         ]);
 
         Product::create([
@@ -499,7 +499,7 @@ class ProductSeeder extends Seeder
             'description' => '5 Tacos + Agua del día',
             'price' => 80.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/sIh3VcR.png'
+            'image_url' => 'https://i.imgur.com/xylPA8B.png'
         ]);
 
         Product::create([
@@ -507,7 +507,7 @@ class ProductSeeder extends Seeder
             'description' => '3 Hot cakes + jugo de naranja',
             'price' => 50.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/I15z5yZ.png'
+            'image_url' => 'https://i.imgur.com/dJzlnur.png'
         ]);
 
         Product::create([
@@ -515,7 +515,7 @@ class ProductSeeder extends Seeder
             'description' => 'Molletes 2 piezas + Agua del día',
             'price' => 38.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/mWBfgqn.png'
+            'image_url' => 'https://i.imgur.com/fGQNKXX.png'
         ]);
 
         $combo6 = Product::create([
@@ -523,7 +523,7 @@ class ProductSeeder extends Seeder
             'description' => 'Cuernito Jamón o Salchicha + Agua del día',
             'price' => 42.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/9gRiRP4.png'
+            'image_url' => 'https://i.imgur.com/QckWeI2.png'
         ]);
 
         Option::create([
@@ -538,7 +538,7 @@ class ProductSeeder extends Seeder
             'description' => 'Hot cakes 3 piezas + Licuado de chocomilk o platano 1/2 Litro',
             'price' => 50.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/6jYcaq4.png'
+            'image_url' => 'https://i.imgur.com/QckWeI2.png'
         ]);
 
         Option::create([
@@ -553,7 +553,7 @@ class ProductSeeder extends Seeder
             'description' => '1 Empanada + 1 Picada + Agua del día',
             'price' => 40.00,
             'category_id' => $combos->id,
-            'image_url' => 'https://i.imgur.com/3rtD67c.png'
+            'image_url' => 'https://i.imgur.com/pApViq9.png'
         ]);
 
 
