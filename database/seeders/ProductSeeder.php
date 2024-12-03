@@ -415,7 +415,7 @@ class ProductSeeder extends Seeder
             'description' => 'Adobo con pasta del día, frijoles, agua del día, tortillas y postres del día.',
             'price' => 74.00,
             'category_id' => $menus->id,
-            'image_url' => 'https://i.imgur.com/xaFlM9r.png'
+            'image_url' => 'https://i.imgur.com/b3ZodSp.png'
         ]);
 
         $menu2 = Product::create([
@@ -423,7 +423,7 @@ class ProductSeeder extends Seeder
            'description' => 'Pechuga de pollo al gusto con arroz, ensalada, sopa del día, tortillas, postres del día y agua del día.',
             'price' => 74.00,
             'category_id' => $menus->id,
-            'image_url' => 'https://i.imgur.com/ZLPgMZ6.png'
+            'image_url' => 'https://i.imgur.com/Im1OksZ.png'
         ]);
         Option::create([
             'name' => 'Pechuga',
@@ -437,7 +437,7 @@ class ProductSeeder extends Seeder
             'description' => 'Bistec al gusto con arroz, sopa del día, frijoles, tortillas, postres del día y agua del día.',
             'price' => 74.00,
             'category_id' => $menus->id,
-            'image_url' => 'https://i.imgur.com/gaWvPFm.png'
+            'image_url' => 'https://i.imgur.com/Lcf2y4F.png'
         ]);
         Option::create([
             'name' => 'Bistec',
@@ -451,7 +451,7 @@ class ProductSeeder extends Seeder
             'description' => 'Chilaquiles con frijoles, sopa del día, postres del día y agua del día.',
             'price' => 74.00,
             'category_id' => $menus->id,
-            'image_url' => 'https://i.imgur.com/FRM478Y.png'
+            'image_url' => 'https://i.imgur.com/zmWI8uH.png'
         ]);
         Option::create([
             'name' => 'Topping',
@@ -465,7 +465,7 @@ class ProductSeeder extends Seeder
             'description' => 'Rajas con frijoles, sopa del día, postres del día y agua del día.',
             'price' => 74.00,
             'category_id' => $menus->id,
-            'image_url' => 'https://i.imgur.com/T5CA2yT.png'
+            'image_url' => 'https://i.imgur.com/CfbUnLP.png'
         ]);
 
         Product::create([
@@ -473,7 +473,7 @@ class ProductSeeder extends Seeder
             'description' => 'Taquitos de pibil (5 tacos) con caldito aparte, postres del día y agua del día.',
             'price' => 74.00,
             'category_id' => $menus->id,
-            'image_url' => 'https://i.imgur.com/UGFz42P.png'
+            'image_url' => 'https://i.imgur.com/JC9iAjv.png'
         ]);
 
         //Combos
