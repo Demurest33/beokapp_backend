@@ -478,6 +478,15 @@ class ProductSeeder extends Seeder
 
         //Combos
         Product::create([
+            'name' => 'Combo 1',
+            'description' => '3 Tacos + Agua del día',
+            'price' => 55.00,
+            'category_id' => $combos->id,
+            'image_url' => 'https://i.imgur.com/WgGtPAy.png'
+        ]);
+
+
+        Product::create([
             'name' => 'Combo 2',
             'description' => '3 Picadas + Agua del día',
             'price' => 50.00,
