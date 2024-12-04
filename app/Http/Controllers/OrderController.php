@@ -204,6 +204,19 @@ class OrderController extends Controller
 
         $order->save();
 
+        // Obtener el token del cliente
+        $clientToken = myUser::where('id', $order->user_id)->value('push_token');
+
+        if ($clientToken) {
+            // Enviar notificación al cliente
+            $this->sendPushNotification(
+                [$clientToken],
+                'Estado de tu pedido actualizado',
+                "Tu pedido ahora está: {$order->status}.",
+                ['order_id' => $order->id, 'status' => $order->status]
+            );
+        }
+
         return response()->json([
             'message' => 'Estado del pedido actualizado correctamente',
             'order' => $order
