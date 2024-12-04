@@ -199,7 +199,7 @@ class OrderController extends Controller
 
         // Si el estado es "Cancelado", guardar el mensaje opcional
         if ($validated['status'] === 'cancelado') {
-            $order->message = $validated['message'] ?? null;
+            $order->cancelation_msg = $validated['message'] ?? null;
         }
 
         $order->save();

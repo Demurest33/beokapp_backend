@@ -14,6 +14,7 @@ return new class extends Migration
             $table->decimal('total', 8, 2);
             $table->enum('status', ['preparando', 'listo', 'entregado', 'cancelado']);
             $table->text('message')->nullable();
+            $table->text('cancelation_msg')->nullable();
             $table->string('pick_up_date');
             $table->enum('payment_type', ['efectivo', 'transferencia']);
             $table->boolean('is_fav')->default(false);
