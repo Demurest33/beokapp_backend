@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 
 class OrderController extends Controller
 {
@@ -61,6 +62,19 @@ class OrderController extends Controller
 
             // Confirmar la transacción
             DB::commit();
+
+            $adminTokens = myUser::whereIn('role', ['ADMIN', 'AXULIAR'])
+                ->whereNotNull('push_token')
+                ->pluck('push_token')
+                ->toArray();
+
+            // Enviar notificación
+            $this->sendPushNotification(
+                $adminTokens,
+                'Nuevo pedido creado',
+                "Hora de entrega: $request->pick_up_date",
+                ['order_id' => $order->id]
+            );
 
             return response()->json([
                 'message' => 'Order created successfully',
@@ -195,4 +209,41 @@ class OrderController extends Controller
             'order' => $order
         ]);
     }
+
+
+
+    private function sendPushNotification($tokens, $title, $body, $data = [])
+    {
+        $client = new Client();
+
+        $notifications = [];
+        foreach ($tokens as $token) {
+            $notifications[] = [
+                'to' => $token,
+                'sound' => 'default',
+                'title' => $title,
+                'body' => $body,
+                'data' => $data,
+            ];
+        }
+
+        try {
+            $response = $client->post('https://exp.host/--/api/v2/push/send', [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => json_encode($notifications),
+            ]);
+
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            // Manejar errores
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
 }
