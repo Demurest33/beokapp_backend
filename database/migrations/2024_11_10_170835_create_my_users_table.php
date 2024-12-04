@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('role', ['CLIENTE', 'ADMIN', 'AUXILIAR']);
             $table->string('phone')->unique();
             $table->string('password');
+            $table->string('push_token')->unique()->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });

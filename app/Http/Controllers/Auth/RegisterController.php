@@ -14,6 +14,7 @@ class RegisterController extends Controller
             'lastname' => 'required|string|max:255',
             'phone' => 'required|string|digits:10',
             'password' => 'required|string|min:6|confirmed',
+            'pushToken' => 'nullable|string',
         ]);
 
         // Verificar si ya existe un usuario con el teléfono proporcionado
@@ -31,6 +32,7 @@ class RegisterController extends Controller
             'password' => $request->password,
             'role' => myUser::ROLE_CLIENTE,  // Asumimos que el rol por defecto es 'CLIENTE'
             'verified_at' => null,  // Puede ser null hasta que se verifique el usuario
+            'push_token' => $request['pushToken']
         ]);
 
         return response()->json($user, 201);

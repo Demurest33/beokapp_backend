@@ -20,6 +20,7 @@ class myUser extends Model
         'phone',
         'password',
         'verified_at',
+        'push_token'
     ];
 
     // Ocultar campos sensibles
