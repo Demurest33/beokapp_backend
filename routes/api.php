@@ -42,6 +42,9 @@ Route::get('/menu', [MenuController::class, 'getMenu']);
 //Products
 Route::get('product/{id}/options', [ProductController::class, 'getOptions']);
 Route::get('/product/{id}', [ProductController::class, 'getProductById']);
+//Productos Admin
+Route::get('/products-by-category', [ProductController::class, 'getProductsByCategory']);
+Route::patch('/products/{id}/toggle-availability', [ProductController::class, 'toggleProductAvailability']);
 
 //Pedidos
 Route::post('/orders', [OrderController::class, 'store']);

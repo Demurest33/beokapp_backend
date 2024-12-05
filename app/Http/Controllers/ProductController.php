@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -34,4 +35,26 @@ class ProductController extends Controller
 
         return response()->json($product);
     }
+
+    public function getProductsByCategory()
+    {
+        $products = Category::with(['products' => function ($query) {
+            $query->select('id', 'name', 'image_url', 'category_id', 'available');
+        }])->get(['id', 'name']); // Solo queremos el ID y el nombre de la categoría
+
+        return response()->json($products);
+    }
+
+    public function toggleProductAvailability(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->available = !$product->available; // Cambia el estado de `available`
+        $product->save();
+
+        return response()->json([
+            'message' => 'Product availability updated successfully',
+            'product' => $product,
+        ], 200);
+    }
+
 }
