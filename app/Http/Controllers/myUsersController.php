@@ -33,4 +33,27 @@ class myUsersController extends Controller
 
         return response()->json(['message' => 'Rol actualizado exitosamente', 'user' => $user], 200);
     }
+
+    public function toggleBan(Request $request, $userId)
+    {
+        // Buscar el usuario
+        $user = myUser::find($userId);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        // Alternar el estado de baneo
+        $user->is_banned = !$user->is_banned;
+        $user->save();
+
+        // Opcional: Enviar una notificación al usuario sobre el cambio de estado
+        // Puedes implementar esto si lo deseas
+
+        return response()->json([
+            'success' => true,
+            'message' => $user->is_banned ? 'Usuario baneado correctamente.' : 'Usuario desbaneado correctamente.',
+            'user' => $user,
+        ]);
+    }
 }

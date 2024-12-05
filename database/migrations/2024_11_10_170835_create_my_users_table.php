@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('push_token')->unique()->nullable();
             $table->timestamp('verified_at')->nullable();
+            $table->boolean('is_banned')->default(0);
             $table->timestamps();
         });
     }

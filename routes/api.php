@@ -26,6 +26,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 //Users
 Route::get('/users', [myUsersController::class, 'index']);
 Route::put('/users/{id}/role', [myUsersController::class, 'updateRole']);
+Route::patch('/users/{user}/toggle-ban', [myUsersController::class, 'toggleBan']);
 
 //Sms
 Route::post('/send-sms', [sendSmsVerification::class, 'sendsms']);
