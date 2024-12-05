@@ -49,6 +49,7 @@ Route::get('/orders/{order}/order-products', [OrderProductController::class, 'ge
 Route::patch('/orders/{id}/favorite', [OrderController::class, 'toggleFavorite']);
 Route::post('/orders/reorder', [OrderController::class, 'reorder']);
 Route::patch('/orders/{id}/status', [OrderController::class, 'updateStatus']);
+Route::patch('/orders/{order}/toggle-paid', [OrderController::class, 'togglePaid']);
 
 //QR
 Route::post('/decode-qr', function (Request $request) {

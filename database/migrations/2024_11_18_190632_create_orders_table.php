@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('cancelation_msg')->nullable();
             $table->string('pick_up_date');
             $table->enum('payment_type', ['efectivo', 'transferencia']);
+            $table->boolean('paid')->default(false);
             $table->boolean('is_fav')->default(false);
             $table->string('hash')->unique();
             $table->timestamps();

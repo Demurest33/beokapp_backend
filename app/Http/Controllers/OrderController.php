@@ -135,6 +135,22 @@ class OrderController extends Controller
             ], 500);
         }
     }
+
+    public function togglePaid(Request $request, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        // Cambiar el estado de `paid`
+        $order->paid = !$order->paid;
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Estado de pago actualizado',
+            'order' => $order,
+        ]);
+    }
+
     public function reorder(Request $request)
     {
         $request->validate([
