@@ -43,6 +43,12 @@ class myUser extends Model
         return ucfirst($value);  // Convierte el rol a mayúscula inicial
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+
     // Agregar validación de la estructura de los datos, si es necesario
     public static function boot()
     {

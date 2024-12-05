@@ -9,9 +9,24 @@ class myUsersController extends Controller
 {
     public function index()
     {
-        $users = myUser::all();
+        $users = myUser::withCount([
+            'orders as preparing_orders_count' => function ($query) {
+                $query->where('status', 'preparando');
+            },
+            'orders as ready_orders_count' => function ($query) {
+                $query->where('status', 'listo');
+            },
+            'orders as delivered_orders_count' => function ($query) {
+                $query->where('status', 'entregado');
+            },
+            'orders as canceled_orders_count' => function ($query) {
+                $query->where('status', 'cancelado');
+            },
+        ])->get();
+
         return response()->json($users);
     }
+
 
     public function updateRole(Request $request, $id)
     {
