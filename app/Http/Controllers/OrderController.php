@@ -7,6 +7,7 @@ use App\Models\Option;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderProduct;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
@@ -24,6 +25,58 @@ class OrderController extends Controller
             'total' => 'required|numeric',
             'additionalInstructions' => 'nullable|string',
         ]);
+
+        //validaciones
+
+        // Validación: Verificar si el usuario está baneado
+        $user = myUser::findOrFail($request->user_id);
+        if ($user->is_banned) {
+            return response()->json(['error' => 'El usuario está baneado y no puede realizar pedidos.'], 403);
+        }
+
+        // Validación: Verificar la disponibilidad de los productos
+        foreach ($request->products as $productData) {
+            $product = Product::find($productData['id']);
+
+            if (!$product || !$product->available) {
+                return response()->json([
+                    'error' => "El producto '{$productData['name']}' no está disponible en este momento."
+                ], 422);
+            }
+        }
+
+
+
+        $now = now()->setTimezone('America/Mexico_City');
+        $pickUpDate = Carbon::parse($request['pick_up_date'], 'America/Mexico_City');
+
+
+        // Validación 1: La fecha y hora de recogida no pueden ser en el pasado
+        if ($pickUpDate->lessThanOrEqualTo($now)) {
+            return response()->json(['error' => 'La fecha y hora de recogida no pueden ser en el pasado.'], 422);
+        }
+
+        // Validación 2: No se aceptan pedidos los domingos
+        if ($pickUpDate->isSunday()) {
+            return response()->json(['error' => 'No se aceptan pedidos los domingos.'], 422);
+        }
+
+        // Validación 3: La hora de recogida no puede ser mayor a las 7 PM
+        if ($pickUpDate->hour >= 19) {
+            return response()->json(['error' => 'La hora de recogida no puede ser después de las 7:00 PM.'], 422);
+        }
+
+        // Validación 4: Los pedidos deben realizarse con al menos 30 minutos de anticipación
+        if ($pickUpDate->lessThanOrEqualTo($now->addMinutes(30))) {
+            return response()->json(['error' => 'Debes realizar tu pedido con al menos 30 minutos de anticipación.'], 422);
+        }
+
+        // Validación 5: No se aceptan transferencias los viernes, sábados ni domingos
+        if ($request['payment_type'] === 'transferencia' &&
+            ($pickUpDate->isFriday() || $pickUpDate->isSaturday() || $pickUpDate->isSunday())) {
+            return response()->json(['error' => 'No se aceptan transferencias los viernes, sábados.'], 422);
+        }
+
 
         // Iniciar una transacción para asegurar que los datos sean consistentes
         DB::beginTransaction();
