@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\myUser;
+use App\Models\Option;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderProduct;
@@ -155,45 +156,48 @@ class OrderController extends Controller
     {
         $request->validate([
             'order_id' => 'required|exists:orders,id',
-            'pick_up_date' => 'required|string',
         ]);
 
-        $originalOrder = Order::with('products')->find($request->order_id);
+        // Obtener el pedido con sus productos
+        $order = Order::with(['products'])->find($request->order_id);
 
+        // Formatear los productos con las opciones seleccionadas y sus precios
+        $productsWithOptions = $order->products->map(function ($product) {
+            // Decodificar las opciones seleccionadas
+            $selectedOptions = json_decode(json_decode($product->pivot->selected_options, true), true);
 
-        // Crear el nuevo pedido
-        $newOrder = Order::create([
-            'user_id' => $originalOrder->user_id,
-            'total' => $originalOrder->total,
-            'status' => 'preparando', // Estado inicial del pedido
-            'pick_up_date' => $request->pick_up_date,
-            'message' => $originalOrder->message,
-            'hash' => 'temp'
-        ]);
+            // Obtener las opciones disponibles del producto
+            $options = Option::where('product_id', $product->id)->get();
 
-        // Generar el hash basado en el ID del pedido y actualizarlo
-        $newOrder->hash = hash('sha256', $newOrder->id);
-        $newOrder->save();
+            // Calcular los precios de las opciones seleccionadas
+            $selectedOptionPrices = [];
+            foreach ($selectedOptions as $key => $value) {
+                $option = $options->firstWhere('name', $key);
+                if ($option && isset($option->values) && isset($option->prices)) {
+                    $index = array_search($value, $option->values); // Buscar el índice del valor seleccionado
+                    if ($index !== false && isset($option->prices[$index])) {
+                        $selectedOptionPrices[] = $option->prices[$index];
+                    }
+                }
+            }
 
-        // Copiar los productos del pedido original al nuevo pedido
-        foreach ($originalOrder->products as $product) {
-            OrderProduct::create([
-                'order_id' => $newOrder->id,
-                'product_id' => $product->id,
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => $product->price,
+                'image_url' => $product->image_url,
+                'selectedOptions' => $selectedOptions,
                 'quantity' => $product->pivot->quantity,
-                'price' => $product->pivot->price,
-                'selected_options' => json_decode($product->pivot->selected_options, true),
-                'image_url' => $product->pivot->image_url,
-                'product_name' => $product->name,
-            ]);
-        }
+                'selectedOptionPrices' => $selectedOptionPrices,
+            ];
+        });
 
         return response()->json([
-            'success' => true,
-            'message' => 'Pedido creado exitosamente.',
-            'new_order_id' => $newOrder->id,
+            'products' => $productsWithOptions,
         ]);
     }
+
 
     public function updateStatus(Request $request, $id)
     {
