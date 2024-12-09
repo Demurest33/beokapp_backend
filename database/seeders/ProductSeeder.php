@@ -392,7 +392,7 @@ class ProductSeeder extends Seeder
             'description' => 'LLeva frijol, queso fresco y mayonesa',
             'price' => 20.00,
             'category_id' => $comidaTodoDia->id,
-            'image_url' => 'https://i.ytimg.com/vi/tKsWIQ2wtl8/sddefault.jpg',
+            'image_url' => 'https://i.imgur.com/Q2RW5Ad.png',
         ]);
 
         $tacos_de_guisado = Product::create([
