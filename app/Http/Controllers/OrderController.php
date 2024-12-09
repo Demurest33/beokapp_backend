@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\myUser;
 use App\Models\Option;
 use App\Models\Order;
@@ -26,7 +27,32 @@ class OrderController extends Controller
             'additionalInstructions' => 'nullable|string',
         ]);
 
-        //validaciones
+        $now = now()->setTimezone('America/Mexico_City');
+        $pickUpDate = Carbon::createFromFormat('d/m/Y g:i:s A', $request['pick_up_date'], 'America/Mexico_City');
+
+        // Horarios de las categorías
+        $CATEGORY_TIMES = [
+            'Desayunos' => [
+                'start' => Carbon::parse('08:00 AM', 'America/Mexico_City'),
+                'end' => Carbon::parse('01:00 PM', 'America/Mexico_City'),
+                'days' => [Carbon::MONDAY, Carbon::TUESDAY, Carbon::WEDNESDAY, Carbon::THURSDAY, Carbon::FRIDAY], // Solo de lunes a viernes
+                'error_message' => 'Los pedidos para desayunos solo se aceptan de lunes a viernes.'
+            ],
+            'Comida Corrida' => [
+                'start' => Carbon::parse('01:00 PM', 'America/Mexico_City'),
+                'end' => Carbon::parse('05:30 PM', 'America/Mexico_City'),
+                'days' => [Carbon::MONDAY, Carbon::TUESDAY, Carbon::WEDNESDAY, Carbon::THURSDAY, Carbon::FRIDAY], // Solo de lunes a viernes
+                'error_message' => 'Los pedidos para comida corrida solo se aceptan de lunes a viernes.'
+            ],
+            'Todo el day' => [
+                'start' => Carbon::parse('08:00 AM', 'America/Mexico_City'),
+                'end' => Carbon::parse('05:30 PM', 'America/Mexico_City'),
+                'days' => [Carbon::MONDAY, Carbon::TUESDAY, Carbon::WEDNESDAY, Carbon::THURSDAY, Carbon::FRIDAY, Carbon::SATURDAY], // Lunes a sábado
+                'error_message' => 'Los pedidos para comida todo el día solo se aceptan de lunes a sábado.'
+            ],
+        ];
+
+
 
         // Validación: Verificar si el usuario está baneado
         $user = myUser::findOrFail($request->user_id);
@@ -43,13 +69,48 @@ class OrderController extends Controller
                     'error' => "El producto '{$productData['name']}' no está disponible en este momento."
                 ], 422);
             }
+
+            $category = Category::find($product->category_id);
+            if (!$category) {
+                return response()->json([
+                    'error' => "La categoría del producto '{$product->name}' no existe."
+                ], 422);
+            }
+
+            $categoryName = $category->name;
+
+            // Validar la hora según la categoría
+            if (isset($CATEGORY_TIMES[$categoryName])) {
+                $startTime = Carbon::createFromFormat('g:i A', $category->availability_start, 'America/Mexico_City');
+                $endTime = Carbon::createFromFormat('g:i A', $category->availability_end, 'America/Mexico_City');
+
+                // Asegurarnos de que `pick_up_date` también esté en el mismo día para la comparación
+                $startTime->setDate($pickUpDate->year, $pickUpDate->month, $pickUpDate->day);
+                $endTime->setDate($pickUpDate->year, $pickUpDate->month, $pickUpDate->day);
+
+                if (!$pickUpDate->between($startTime, $endTime)) {
+                    return response()->json([
+                        'error' => "El producto '{$product->name}' de la categoría '{$categoryName}' solo está disponible entre {$startTime->format('g:i A')} y {$endTime->format('g:i A')}."
+                    ], 422);
+                }
+
+                // Validación: Verificar si el día de la semana es válido según la categoría
+                $allowedDays = $CATEGORY_TIMES[$categoryName]['days'];
+
+
+                if (!in_array($pickUpDate->dayOfWeek, $allowedDays)) {
+                    $errorMessage = $CATEGORY_TIMES[$categoryName]['error_message'];
+                    return response()->json([
+                        'error' => $errorMessage
+                    ], 422);
+                }
+
+            } else {
+                return response()->json([
+                    'error' => "No se ha configurado un horario para la categoría '{$categoryName}'."
+                ], 422);
+            }
         }
-
-
-
-        $now = now()->setTimezone('America/Mexico_City');
-        $pickUpDate = Carbon::parse($request['pick_up_date'], 'America/Mexico_City');
-
 
         // Validación 1: La fecha y hora de recogida no pueden ser en el pasado
         if ($pickUpDate->lessThanOrEqualTo($now)) {
