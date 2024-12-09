@@ -60,6 +60,10 @@ class OrderController extends Controller
             return response()->json(['error' => 'El usuario está baneado y no puede realizar pedidos.'], 403);
         }
 
+        if (!$user->verified_at) {
+            return response()->json(['error' => 'Debes de verificarte antes de poder hacer pedidos.'], 404);
+        }
+
         // Validación: Verificar la disponibilidad de los productos
         foreach ($request->products as $productData) {
             $product = Product::find($productData['id']);
