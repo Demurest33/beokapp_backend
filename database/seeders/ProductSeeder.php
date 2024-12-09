@@ -111,7 +111,7 @@ class ProductSeeder extends Seeder
             'description' => 'Empanadas con relleno, salsa y crema y queso fresco al gusto',
             'price' => 15.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://img-global.cpcdn.com/recipes/55fc011003923aeb/1200x630cq70/photo.jpg',
+            'image_url' => 'https://i.imgur.com/WSlFlMt.png',
         ]);
         Option::create([
             'name' => 'Relleno',
@@ -137,7 +137,7 @@ class ProductSeeder extends Seeder
             'description' => 'Quesadilla con salsa a el gusto',
             'price' => 15.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://www.mimaseca.com/media/1396/tacos_chicharron.jpg',
+            'image_url' => 'https://i.imgur.com/s83u5bO.png',
         ]);
         Option::create([
             'name' => 'Tamaño',
@@ -157,7 +157,7 @@ class ProductSeeder extends Seeder
             'description' => 'Quesadilla con salsa a el gusto',
             'price' => 25.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBPOZxp6zMP9Tdi7ln8x2nNmvBGInDALZFrQ&s',
+            'image_url' => 'https://i.imgur.com/IFIJ8iY.png',
         ]);
         Option::create([
             'name' => 'Tamaño',
@@ -183,7 +183,7 @@ class ProductSeeder extends Seeder
             'description' => 'Enfrijoladas con creama y queso',
             'price' => 60.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://img-global.cpcdn.com/recipes/cebc1de0686aebdc/400x400cq70/photo.jpg',
+            'image_url' => 'https://i.imgur.com/HfRYhBM.png',
         ]);
         Option::create([
             'name' => 'Relleno',
@@ -197,7 +197,7 @@ class ProductSeeder extends Seeder
             'description' => 'Entomatadas con crema y queso',
             'price' => 60.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://assets.unileversolutions.com/recipes-v2/214593.jpg',
+            'image_url' => 'https://i.imgur.com/04pBtSu.png',
         ]);
         Option::create([
             'name' => 'Relleno',
@@ -211,7 +211,7 @@ class ProductSeeder extends Seeder
             'description' => 'Tostadas con crema y queso',
             'price' => 60.00,
             'category_id' => $desayunos->id,
-            'image_url' => 'https://guerrerotortillas.com/wp-content/uploads/2021/04/beef-tostadas.jpg',
+            'image_url' => 'https://i.imgur.com/FsF6Sb7.png',
         ]);
         Option::create([
             'name' => 'Relleno',
@@ -226,7 +226,7 @@ class ProductSeeder extends Seeder
             'description' => 'Bistec al gusto con guarnición',
             'price' => 50.00,
             'category_id' => $comidaCorrida->id,
-            'image_url' => 'https://thumbs.dreamstime.com/b/mexican-stake-bistec-la-mexicana-94492950.jpg',
+            'image_url' => 'https://i.imgur.com/3rFmQZa.png',
         ]);
         Option::create([
             'name' => 'Guarnición',
@@ -246,7 +246,7 @@ class ProductSeeder extends Seeder
             'description' => 'Pechuga asada o empanizada con guarnición a elección.',
             'price' => 50.00,
             'category_id' => $comidaCorrida->id,
-            'image_url' => 'https://storage.googleapis.com/fitia_public_images/recipes%2FGR-R-V-00001677_jja6xc2viof62dz8fg3bir4c_large.jpg',
+            'image_url' => 'https://i.imgur.com/LcbL6Yu.png',
         ]);
         Option::create([
             'name' => 'Guarnición',
@@ -266,7 +266,7 @@ class ProductSeeder extends Seeder
             'description' => 'Elegir 2 proteinas y 3 complementos. +Aderezo Ranch y crotones',
             'price' => 65.00,
             'category_id' => $comidaCorrida->id,
-            'image_url' => 'https://industriasantaclara.co/wp-content/uploads/2021/05/img-ensalada.jpg',
+            'image_url' => 'https://i.imgur.com/JFvijFi.png',
         ]);
         Option::create([
             'name' => 'Proteina 1',
@@ -304,7 +304,7 @@ class ProductSeeder extends Seeder
             'description' => 'Chilaquiles con 1 topping al gusto.',
             'price' => 60.00,
             'category_id' => $comidaCorrida->id,
-            'image_url' => 'https://cdn0.recetasgratis.net/es/posts/6/9/0/chilaquiles_rojos_con_pollo_75096_orig.jpg',
+            'image_url' => 'https://i.imgur.com/mVNwWGh.png',
         ]);
         Option::create([
             'name' => 'Topping',
@@ -318,7 +318,7 @@ class ProductSeeder extends Seeder
             'description' => 'Lleva lechuga, mayonesa y catsup',
             'price' => 33.00,
             'category_id' => $comidaTodoDia->id,
-            'image_url' => 'https://www.vidactual.com/rcpmaker/wp-content/uploads/2018/10/Cuernito-de-Jam%C3%B3n-y-Queso.jpg',
+            'image_url' => 'https://i.imgur.com/jeIff04.png',
         ]);
         Option::create([
             'name' => 'Cuerpo',
@@ -338,7 +338,7 @@ class ProductSeeder extends Seeder
             'description' => 'Lleva lechuga, mayonesa y catsup',
             'price' => 33.00,
             'category_id' => $comidaTodoDia->id,
-            'image_url' => 'https://sanrafaeldeli.com/wp-content/uploads/2020/06/receta_sandwich_sub.png',
+            'image_url' => 'https://i.imgur.com/YPXMDBa.png',
         ]);
         Option::create([
             'name' => 'Cuerpo',
@@ -358,7 +358,7 @@ class ProductSeeder extends Seeder
             'description' => 'Lleva queso Manchego, lechuga y jamón',
             'price' => 20.00,
             'category_id' => $comidaTodoDia->id,
-            'image_url' => 'https://www.gastrolabweb.com/u/fotografias/m/2023/12/28/f850x638-56046_133535_5050.jpg',
+            'image_url' => 'https://i.imgur.com/iTmxTOP.png',
         ]);
         Option::create([
             'name' => 'Tamaño',
@@ -372,7 +372,7 @@ class ProductSeeder extends Seeder
             'description' => 'Lleva lechuga, mayonesa y catsup',
             'price' => 25.00,
             'category_id' => $comidaTodoDia->id,
-            'image_url' => 'https://editorialtelevisa.brightspotcdn.com/a1/91/54ede86c4a7c89ee98f239261143/sandwich-saludable-para-lunch.jpeg',
+            'image_url' => 'https://i.imgur.com/vEJieGx.png',
         ]);
         Option::create([
             'name' => 'Cuerpo',
@@ -400,7 +400,7 @@ class ProductSeeder extends Seeder
             'description' => 'Taco de guisado a escoger. Pregunta por los guisados del día!',
             'price' => 19.00,
             'category_id' => $comidaTodoDia->id,
-            'image_url' => 'https://images.ctfassets.net/n7hs0hadu6ro/42YF5trfjsN64pJQKoNW8M/04f4aeb7aec6f6cc8a03ec2ec55602b7/un-gustito-con-tacos-de-guisados.jpg',
+            'image_url' => 'https://i.imgur.com/TXGTI6K.png',
         ]);
         Option::create([
             'name' => 'Guisados',
