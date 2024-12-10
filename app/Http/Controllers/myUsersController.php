@@ -7,9 +7,13 @@ use App\Models\myUser;
 
 class myUsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = myUser::withCount([
+        // Obtén el userId del request, si está presente
+        $userId = $request->query('userId');
+
+        // Crea la consulta base
+        $query = myUser::withCount([
             'orders as preparing_orders_count' => function ($query) {
                 $query->where('status', 'preparando');
             },
@@ -22,7 +26,15 @@ class myUsersController extends Controller
             'orders as canceled_orders_count' => function ($query) {
                 $query->where('status', 'cancelado');
             },
-        ])->get();
+        ]);
+
+        // Filtra por userId si está presente
+        if ($userId) {
+            $query->where('id', $userId);
+        }
+
+        // Ejecuta la consulta y obtén los resultados
+        $users = $query->get();
 
         return response()->json($users);
     }
